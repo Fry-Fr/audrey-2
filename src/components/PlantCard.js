@@ -1,5 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Image = styled.img`
+    max-width: 20%;
+`;
 
 const PlantCard = (props) => {
     const history = useHistory();
@@ -8,6 +13,7 @@ const PlantCard = (props) => {
     return (
         <div>
             <div key={id} onClick={()=>history.push(`/plants/${id}`,{plant:{title,id,species,schedule,image}})}>
+                <Image src={image} alt={''} />
                 <h1>{title}</h1>
                 <p>{species}</p>
                 <h4>{schedule}</h4>

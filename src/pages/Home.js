@@ -38,9 +38,10 @@ const Home = ({ plants }) => {
                         <PlantCard
                             title={plant.nickname}
                             species={plant.species}
-                            schedule={plant.h2o_frequency}
-                            id={plant.id}
-                            key={plant.id}
+                            schedule={plant.h20_frequency}
+                            image={plant.image_url}
+                            id={plant.plant_id}
+                            key={plant.plant_id}
                         />
                     );
                 })}

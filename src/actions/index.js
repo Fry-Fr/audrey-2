@@ -3,15 +3,16 @@ import { axiosWithAuth } from "../utilities/axiosCalls";
 export const GET_PLANTS = "GET_PLANTS";
 export const GET_USER = "GET_USER";
 export const GET_SUCCESS = "GET_SUCCESS";
+export const GET_SUCCESS_USER = "GET_SUCCESS_USER";
 export const GET_ERROR = "GET_ERROR";
 
-export const getPlants = ()=> (dispatch)=>{
+export const getPlants = (id)=> (dispatch)=>{
     dispatch({type: GET_PLANTS})
     axiosWithAuth()
-    .get('/api/plants')
+    .get(`/user/${id}/plants`)
     .then(res=>{
         dispatch({
-            type: GET_SUCCESS, payload: res.data
+            type: GET_SUCCESS, payload: res.data.plants
         });
     })
     .catch(err=>{
@@ -21,13 +22,13 @@ export const getPlants = ()=> (dispatch)=>{
     })
 };
 
-export const getUser = ()=> (dispatch)=>{
+export const getUser = (id)=> (dispatch)=>{
     dispatch({type: GET_USER})
     axiosWithAuth()
-    .get('/api/users/:id')
+    .get(`/user/${id}`)
     .then(res=>{
         dispatch({
-            type: GET_SUCCESS, payload: res.data
+            type: GET_SUCCESS_USER, payload: res.data
         });
     })
     .catch(err=>{

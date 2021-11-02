@@ -74,7 +74,7 @@ const SignUp = props => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('https://backendanew.herokuapp.com/api/auth/register', {
+    axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/register', {
         username: form.username,
         password: form.password,
     })

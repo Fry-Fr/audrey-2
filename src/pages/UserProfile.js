@@ -86,16 +86,15 @@ export default function UserProfile() {
     const [updatedUserProfileObject, setupdatedUserProfile] = useState(initialFormValues)
     const [disabled, setDisabled] = useState(true)
     const [formErrors, setFormErrors] = useState(initialFormErrors) // object
+    const uid = localStorage.getItem('uid')
 
- 
     axiosWithAuth()
-    .get('/api/users')
+    .get(`/user/${uid}`)
     .then(res => {
-        const userObj = res.data.filter( item => item.username === localStorage.getItem('userName'))
         setupdatedUserProfile({
             ...updatedUserProfileObject,
-            'username': userObj[0].username,
-            'id': userObj[0].id,
+            'username': res.data.username,
+            'id': res.data.user_id,
         })
     })
     .catch(err => {

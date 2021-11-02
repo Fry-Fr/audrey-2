@@ -58,14 +58,13 @@ const Login = props => {
   const handleSubmit = (event) => {
       event.preventDefault();
       props.fetchStatus(true);
-      axios.post('https://backendanew.herokuapp.com/api/auth/login', form)
+      axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/login', form)
       .then(res => {
         setTimeout(() => {
           props.fetchStatus(false);
-          console.log('login submit reply: ',res.data.token);
-          console.log(res);
           localStorage.setItem('token', res.data.token);
           localStorage.setItem('userName', `${form.username}`);
+          localStorage.setItem('uid', `${res.data.user_id}`);
           push('/');
           window.location.reload()
         },1750);
@@ -73,9 +72,7 @@ const Login = props => {
       .catch(err => {
         props.fetchStatus(false);
         props.errHandle(err.response.data);
-      })
-      
-      console.log("submitted", form);
+      })      
     };
       
   return (

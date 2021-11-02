@@ -1,4 +1,4 @@
-import { GET_USER, GET_SUCCESS, GET_ERROR } from '../actions';
+import { GET_USER, GET_SUCCESS_USER, GET_ERROR } from '../actions';
 
 const initialData = {
     data: {},
@@ -15,11 +15,11 @@ const reducer = ( state=initialData, action ) => {
                 data: {},
                 isFetching: true
             });
-        case GET_SUCCESS:
+        case GET_SUCCESS_USER:
             return({
                 ...state,
                 isFetching: false,
-                data: {...action.payload}
+                data: action.payload
             });
         case GET_ERROR:
             return({

@@ -139,6 +139,7 @@ export default function Nav() {
           onClick={() => {
             let history = createBrowserHistory({ forceRefresh: true });
             localStorage.removeItem("token");
+            localStorage.removeItem("uid");
             localStorage.removeItem("userName");
             if (
               history.location.pathname !== "/signup" &&

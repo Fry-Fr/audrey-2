@@ -11,7 +11,7 @@ import UserProfile from "./pages/UserProfile"
 import PrivateRoute from "./components/PrivateRoute";
 import EditPlant from "./pages/EditPlant";
 import { connect } from 'react-redux';
-import { getPlants } from './actions';
+import { getPlants, getUser } from './actions';
 import LoadingPage from "./pages/LoadingPage";
 
 const Content = styled.div`
@@ -22,15 +22,17 @@ const Content = styled.div`
 `;
 
 function App(props) {
-  const { plants, getPlants } = props;
+  const { plants, getPlants, getUser } = props;
   const [fetchingStatus, setfetchingStatus] = useState(false)
   const [err, setErr] = useState('');
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      getPlants();
+      const uid = localStorage.getItem('uid');
+      getUser(uid);
+      getPlants(uid);
     }
-  },[getPlants]);
+  },[getUser,getPlants]);
 
   const handleError = (x) => {
     setErr(x);
@@ -56,8 +58,9 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-    plants: state.plants
+    plants: state.plants,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps,{getPlants}) (App);
+export default connect(mapStateToProps,{getPlants,getUser}) (App);
