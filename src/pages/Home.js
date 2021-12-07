@@ -7,7 +7,7 @@ import {Heading} from "../styles/StyledComponents";
 
 const Card = styled.div`
   text-align: center;
-  width: 90%;
+  width: 75%;
   margin: 3rem auto;
   padding: 10px;
   background-color: #d4d4aa;
@@ -15,8 +15,8 @@ const Card = styled.div`
   transition: all 0.3s ease-in;
 
   &:hover {
-    background-color: #fff;
-    color: #fff;
+    background-color: #a9a9d4;
+    color: #0000fff;
   }
 `;
 
@@ -33,8 +33,9 @@ const Home = ({ plants }) => {
             :
             <div>
                 <Heading>My Plants</Heading>
-                {plants.map(plant => {
+                {plants.map((plant, index) => {
                     return (
+                        <Card key={index}>
                         <PlantCard
                             title={plant.nickname}
                             species={plant.species}
@@ -43,6 +44,7 @@ const Home = ({ plants }) => {
                             id={plant.plant_id}
                             key={plant.plant_id}
                         />
+                        </Card>
                     );
                 })}
             </div>

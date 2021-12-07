@@ -74,11 +74,11 @@ const Login = props => {
         props.errHandle(err.response.data);
       })      
     };
-      
+    
   return (
     <>
       <Heading>Login page</Heading>
-      {props.appErr.wrong_credentials ? <Error>{props.appErr.wrong_credentials}</Error> : null}
+      {props.appErr.message ? <Error>{props.appErr.message}</Error> : null}
       <FormDiv onSubmit={handleSubmit}>
           {error.username ? <Error>{error.username}</Error> : undefined}
         <Input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} />

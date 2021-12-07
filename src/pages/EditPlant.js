@@ -47,7 +47,7 @@ const EditPlant = (props) => {
                 plants.map((plant, i) => {
                     return (
                         <FormSection key={i} onSubmit={handleSave} >
-                            <Heading>Edit {plant.nickname}</Heading>
+                            <Heading style={{fontSize: "1.75rem"}}>Edit {plant.nickname}</Heading>
                             <label htmlFor="nickname"></label>
                             <Input
                                 id={plant.id}
