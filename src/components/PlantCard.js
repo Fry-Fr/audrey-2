@@ -3,7 +3,10 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Image = styled.img`
-    max-width: 20%;
+    max-width: 30%;
+    @media(max-width:1000px) {
+        max-width: 50%;
+    }
 `;
 
 const PlantCard = (props) => {

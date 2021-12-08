@@ -15,6 +15,23 @@ export const EditContainer = styled.div`
   -webkit-box-shadow:0 .5rem .5rem grey;
   -moz-box-shadow:0 .5rem .5rem grey;
   box-shadow:0 1rem 1rem grey;
+  button {
+    border: .2rem groove #d4d4aa;
+    border-radius: .2rem;
+    background-color: #d4d4aa;
+    font-size: 1rem;
+    margin-top: .3rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+  }
+  @media(max-width:800px) {
+    width: 80%;
+  }
+  @media(max-width:600px) {
+    width: 100%;
+    padding: .2rem;
+  }
 `;
 
 export const FormDiv = styled('form')`
@@ -70,6 +87,10 @@ export const Button = styled.button`
   border: none;
   background-color: #fff;
   transition: all 0.3s ease-in;
+  &.user-update {
+    background-color: #d4d4aa;
+    border: .2rem groove #d4d4aa;
+  }
   &:hover {
     background-color: #000;
     color: #fff;
@@ -103,4 +124,9 @@ export const FormSection = styled.div`
   -webkit-box-shadow:0 .5rem .5rem grey;
   -moz-box-shadow:0 .5rem .5rem grey;
   box-shadow:0 1rem 1rem grey;
+  &.edit-forms {
+    @media(max-width:600px) {
+      width: 90%;
+    }
+  }
 `;

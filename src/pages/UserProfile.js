@@ -238,7 +238,7 @@ export default function UserProfile() {
                         </div>
                         <ErrorDiv>{formErrors.confirmNewPassword}</ErrorDiv> */}
                      {/* </div> */}
-                    <Button type="submit" disabled={disabled}>Update</Button>
+                    <Button className="user-update" type="submit" disabled={disabled}>Update</Button>
 
                 </form>
             </FormSection>

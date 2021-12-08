@@ -40,13 +40,13 @@ const EditPlant = (props) => {
 
         console.log("saved", edit)
     }
-
+console.log(plants)
     return (
         <EditContainer>
             {plants ?
                 plants.map((plant, i) => {
                     return (
-                        <FormSection key={i} onSubmit={handleSave} >
+                        <FormSection key={i} onSubmit={handleSave} className="edit-forms" >
                             <Heading style={{fontSize: "1.75rem"}}>Edit {plant.nickname}</Heading>
                             <label htmlFor="nickname"></label>
                             <Input
@@ -66,12 +66,12 @@ const EditPlant = (props) => {
                                 onChange={handleChange}
                                 placeholder="Species"
                             />
-                            <label htmlFor="h2o_frequency"></label>
+                            <label htmlFor="h20_frequency"></label>
                             <Input
                                 id={plant.id}
                                 type="text-field"
-                                name="h2o_frequency"
-                                value={edit[i].h2o_frequency}
+                                name="h20_frequency"
+                                value={edit[i].h20_frequency}
                                 onChange={handleChange}
                                 placeholder="Schedule"
                             />                            
