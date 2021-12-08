@@ -15,7 +15,7 @@ const PlantCard = (props) => {
 
     return (
         <div>
-            <div key={id} onClick={()=>history.push(`/plants/${id}`,{plant:{title,id,species,schedule,image}})}>
+            <div key={id} onClick={()=>history.push(`/plants/${id}`)}>
                 <Image src={image} alt={''} />
                 <h1>{title}</h1>
                 <p>{species}</p>

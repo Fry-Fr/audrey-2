@@ -23,17 +23,14 @@ const Card = styled.div`
 const Home = ({ plants }) => {
 
     return (
-        (!plants) ?
-            <div>
-                <Heading>My Plants</Heading>
+        <div>
+            <Heading>My Plants</Heading>
+            {!plants ?
                 <Card>
                     <h2>No plants added yet</h2>
                 </Card>
-            </div>
             :
-            <div>
-                <Heading>My Plants</Heading>
-                {plants.map((plant, index) => {
+               plants.map((plant, index) => {
                     return (
                         <Card key={index}>
                         <PlantCard
@@ -47,7 +44,7 @@ const Home = ({ plants }) => {
                         </Card>
                     );
                 })}
-            </div>
+        </div>
     );
 }
 

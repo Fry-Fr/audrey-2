@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { axiosWithAuth } from '../utilities/axiosCalls';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { EditContainer, FormSection, Input, Heading} from '../styles/StyledComponents';
 
 const EditPlant = (props) => {
-    const { plants } = props;
-    const [edit, setEdit] = useState([...plants]);
-
     const { push } = useHistory();
+    const { id: idParams } = useParams();
+    const { plants } = props;
+    const [edit, setEdit] = useState(idParams ? plants.filter(plant => plant.plant_id === Number(idParams)) : [...plants]);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -40,10 +40,10 @@ const EditPlant = (props) => {
 
         console.log("saved", edit)
     }
-console.log(plants)
+
     return (
         <EditContainer>
-            {plants ?
+            {!idParams && plants ?
                 plants.map((plant, i) => {
                     return (
                         <FormSection key={i} onSubmit={handleSave} className="edit-forms" >
@@ -76,7 +76,39 @@ console.log(plants)
                                 placeholder="Schedule"
                             />                            
                         </FormSection>)
-                }) : undefined}
+                }) : edit.map((plant, i) => {
+                    return (
+                        <FormSection key={i} onSubmit={handleSave} className="edit-forms" >
+                            <Heading style={{fontSize: "1.75rem"}}>Edit {plant.nickname}</Heading>
+                            <label htmlFor="nickname"></label>
+                            <Input
+                                id={plant.id}
+                                type="text"
+                                name="nickname"
+                                value={edit[i].nickname}
+                                onChange={handleChange}
+                                placeholder="Nickname"
+                            />
+                            <label htmlFor="species"></label>
+                            <Input
+                                id={plant.id}
+                                type="text"
+                                name="species"
+                                value={edit[i].species}
+                                onChange={handleChange}
+                                placeholder="Species"
+                            />
+                            <label htmlFor="h20_frequency"></label>
+                            <Input
+                                id={plant.id}
+                                type="text-field"
+                                name="h20_frequency"
+                                value={edit[i].h20_frequency}
+                                onChange={handleChange}
+                                placeholder="Schedule"
+                            />                            
+                        </FormSection>)
+                })}
             <button onClick={handleSave}>save</button>
             <button onClick={()=> push("/addplant") }>add plant</button>
         </EditContainer>
