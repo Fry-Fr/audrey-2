@@ -21,11 +21,11 @@ const Card = styled.div`
 `;
 
 const Home = ({ plants }) => {
-
+console.log(plants.length)
     return (
         <div>
             <Heading>My Plants</Heading>
-            {!plants ?
+            {plants.length === 0 ?
                 <Card>
                     <h2>No plants added yet</h2>
                 </Card>
