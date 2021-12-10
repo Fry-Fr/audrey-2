@@ -69,20 +69,14 @@ const ProfileHeading = styled(Heading)`
 
 
 // pull in errors or create them here
-export default function UserProfile() {
+export default function UserProfile(props) {
+    const { user } = props;
+    const updatedUserProfileObject = initialFormValues;
     const [UserProfileFormValues, setUserProfileFormValues] = useState(initialUserProfileFormValues);
-    const [updatedUserProfileObject, setupdatedUserProfile] = useState(initialFormValues);
     const [formErrors, setFormErrors] = useState(initialFormErrors);
     const [disabled, setDisabled] = useState(true);
-    const uid = localStorage.getItem('uid')
-
-    /* USER DATA SHOULD BE PULL IN FROM PROPS TO UPDATE LATEST DATA */
-    useEffect(() => {
-        setupdatedUserProfile({
-            ...updatedUserProfileObject,
-            'username': localStorage.getItem('userName'),
-        })
-    },[updatedUserProfileObject])
+    
+    updatedUserProfileObject.username = user.username;
 
     const onChange = e => {
         let name = e.target.name;
@@ -107,17 +101,16 @@ export default function UserProfile() {
     const handleSubmit = e => {
         e.preventDefault();
         
-        // axiosWithAuth()
-        // .put(`/user/${uid}`, UserProfileFormValues)
-        // .then(res => {
-        //     setUserProfileFormValues(initialUserProfileFormValues);//CHECK ACTIONS TO UPDATE USER DATA MAYBE WITH getUser().
-        //     console.log(res)
-        // })
-        // .catch(err => {
-        //     setFormErrors({ ...formErrors, 'errMessage': err.response.data.message })
-        //     console.dir(err)
-        // })
-        console.log('update user data')
+        axiosWithAuth()
+        .put(`/user/${user.user_id}`, UserProfileFormValues)
+        .then(res => {
+            setUserProfileFormValues(initialUserProfileFormValues);
+            window.location.reload();
+        })
+        .catch(err => {
+            setFormErrors({ ...formErrors, 'errMessage': err.response.data.message })
+            console.dir(err)
+        })
     }
 
     useEffect(() => {

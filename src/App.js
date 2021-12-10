@@ -22,7 +22,7 @@ const Content = styled.div`
 `;
 
 function App(props) {
-  const { plants, getPlants, getUser } = props;
+  const { plants, user, getPlants, getUser } = props;
   const [fetchingStatus, setfetchingStatus] = useState(false)
   const [err, setErr] = useState('');
 
@@ -46,7 +46,7 @@ function App(props) {
                 <Route exact path="/" component={Welcome}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/login" component={() => fetchingStatus === false ? <Login appErr={err} errHandle={handleError} fetchStatus={setfetchingStatus} /> : <LoadingPage />}/>
-                <PrivateRoute path="/profile" component={UserProfile}/>
+                <PrivateRoute path="/profile" component={() => <UserProfile user={user.data} />}/>
                 <PrivateRoute path="/addplant" component={AddPlant} exact />
                 <PrivateRoute path="/home" component={() => <Home plants={plants.data} />}/>
                 <PrivateRoute path="/plants" component={() => <EditPlant plants={plants.data} />} exact/>
