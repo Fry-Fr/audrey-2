@@ -7,6 +7,7 @@ const EditPlant = (props) => {
     const { push } = useHistory();
     const { id: idParams } = useParams();
     const { plants } = props;
+    const uid = localStorage.getItem('uid');
     const [edit, setEdit] = useState(idParams ? plants.filter(plant => plant.plant_id === Number(idParams)) : [...plants]);
 
     const handleChange = (event) => {
@@ -15,8 +16,8 @@ const EditPlant = (props) => {
         const id = parseInt(event.target.id);
 
         setEdit(
-            edit.map(item => {
-                if (item.id === id) {
+            edit.map((item) => {
+                if (item.plant_id === id) {
                     return { ...item, [name]: value }
                 } else {
                     return item
@@ -27,10 +28,10 @@ const EditPlant = (props) => {
 
     const handleSave = (event) => {
         event.preventDefault();
-        const id = edit.map( item => item.id);
-        id.forEach(id => {
+        const id = edit.map( item => item.plant_id);
+        id.forEach((id, i) => {
             axiosWithAuth()
-            .put(`/api/plants/${id}`, edit[id -1])
+            .put(`/user/${uid}/plants/${id}`, edit[i])
             .then(res => {
                 push("/home")
                 window.location.reload();
@@ -50,7 +51,7 @@ const EditPlant = (props) => {
                             <Heading style={{fontSize: "1.75rem"}}>Edit {plant.nickname}</Heading>
                             <label htmlFor="nickname"></label>
                             <Input
-                                id={plant.id}
+                                id={plant.plant_id}
                                 type="text"
                                 name="nickname"
                                 value={edit[i].nickname}
@@ -59,7 +60,7 @@ const EditPlant = (props) => {
                             />
                             <label htmlFor="species"></label>
                             <Input
-                                id={plant.id}
+                                id={plant.plant_id}
                                 type="text"
                                 name="species"
                                 value={edit[i].species}
@@ -68,7 +69,7 @@ const EditPlant = (props) => {
                             />
                             <label htmlFor="h20_frequency"></label>
                             <Input
-                                id={plant.id}
+                                id={plant.plant_id}
                                 type="text-field"
                                 name="h20_frequency"
                                 value={edit[i].h20_frequency}
@@ -82,7 +83,7 @@ const EditPlant = (props) => {
                             <Heading style={{fontSize: "1.75rem"}}>Edit {plant.nickname}</Heading>
                             <label htmlFor="nickname"></label>
                             <Input
-                                id={plant.id}
+                                id={plant.plant_id}
                                 type="text"
                                 name="nickname"
                                 value={edit[i].nickname}
@@ -91,7 +92,7 @@ const EditPlant = (props) => {
                             />
                             <label htmlFor="species"></label>
                             <Input
-                                id={plant.id}
+                                id={plant.plant_id}
                                 type="text"
                                 name="species"
                                 value={edit[i].species}
@@ -100,7 +101,7 @@ const EditPlant = (props) => {
                             />
                             <label htmlFor="h20_frequency"></label>
                             <Input
-                                id={plant.id}
+                                id={plant.plant_id}
                                 type="text-field"
                                 name="h20_frequency"
                                 value={edit[i].h20_frequency}
