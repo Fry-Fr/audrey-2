@@ -85,9 +85,10 @@ export default function UserProfile() {
     const handleSubmit = e => {
         e.preventDefault();
         //*******//Needs to send information to database//********//
+        const uid = localStorage.getItem('uid');
         axiosWithAuth()
-        .post('/api/plants', {
-            h2o_frequency: addPlantFormValues.h2o_frequency,
+        .post(`/user/${uid}/plants`, {
+            h20_frequency: addPlantFormValues.h2o_frequency,
             nickname: addPlantFormValues.nickname,
             species: addPlantFormValues.species,
         })

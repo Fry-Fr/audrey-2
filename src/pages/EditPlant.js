@@ -33,13 +33,27 @@ const EditPlant = (props) => {
             axiosWithAuth()
             .put(`/user/${uid}/plants/${id}`, edit[i])
             .then(res => {
-                push("/home")
+                push("/home");
                 window.location.reload();
             })
             .catch(err => console.log(err))
         })
 
         console.log("saved", edit)
+    }
+
+    const handleDeletePlant = (event) => {
+        event.preventDefault();
+        const uid = localStorage.getItem('uid');
+        axiosWithAuth()
+        .delete(`/user/${uid}/plants/${idParams}`)
+        .then(res => {
+            push("/home");
+            window.location.reload();
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     return (
@@ -111,7 +125,7 @@ const EditPlant = (props) => {
                         </FormSection>)
                 })}
             <button onClick={handleSave}>save</button>
-            <button onClick={()=> push("/addplant") }>add plant</button>
+            {!idParams ? <button onClick={()=> push("/addplant") }>add plant</button> : <button onClick={handleDeletePlant}>delete plant</button>}
         </EditContainer>
     )
 }
