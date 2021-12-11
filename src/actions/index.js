@@ -5,6 +5,7 @@ export const GET_USER = "GET_USER";
 export const GET_SUCCESS = "GET_SUCCESS";
 export const GET_SUCCESS_USER = "GET_SUCCESS_USER";
 export const GET_ERROR = "GET_ERROR";
+export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
 
 export const getPlants = (id)=> (dispatch)=>{
     dispatch({type: GET_PLANTS})
@@ -34,6 +35,21 @@ export const getUser = (id)=> (dispatch)=>{
     .catch(err=>{
         dispatch({
             type: GET_ERROR, payload: JSON.stringify(err)
+        })
+    })
+};
+
+export const updateUser = (id, body) => (dispatch) => {
+    axiosWithAuth()
+    .put(`/user/${id}`, body)
+    .then(res => {
+        dispatch({
+            type: USER_UPDATE_SUCCESS, payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERROR, payload: JSON.stringify(err.response.data.message)
         })
     })
 };

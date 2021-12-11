@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { axiosWithAuth } from '../utilities/axiosCalls';
 import * as yup from 'yup';
 import userProfileSchema from '../validation/userProfileSchema';
 import styled from 'styled-components';
@@ -70,13 +69,14 @@ const ProfileHeading = styled(Heading)`
 
 // pull in errors or create them here
 export default function UserProfile(props) {
-    const { user } = props;
+    const { user, updateUser, errs } = props;
     const updatedUserProfileObject = initialFormValues;
     const [UserProfileFormValues, setUserProfileFormValues] = useState(initialUserProfileFormValues);
     const [formErrors, setFormErrors] = useState(initialFormErrors);
     const [disabled, setDisabled] = useState(true);
     
     updatedUserProfileObject.username = user.username;
+    formErrors.errMessage = errs;
 
     const onChange = e => {
         let name = e.target.name;
@@ -100,17 +100,8 @@ export default function UserProfile(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        
-        axiosWithAuth()
-        .put(`/user/${user.user_id}`, UserProfileFormValues)
-        .then(res => {
-            setUserProfileFormValues(initialUserProfileFormValues);
-            window.location.reload();
-        })
-        .catch(err => {
-            setFormErrors({ ...formErrors, 'errMessage': err.response.data.message })
-            console.dir(err)
-        })
+        updateUser(user.user_id, UserProfileFormValues);
+        setUserProfileFormValues(initialUserProfileFormValues);
     }
 
     useEffect(() => {
