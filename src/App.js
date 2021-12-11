@@ -45,7 +45,7 @@ function App(props) {
             <Content>
                 <Route exact path="/" component={() => <Welcome user={user.data} />}/>
                 <Route path="/signup" component={SignUp}/>
-                <Route path="/login" component={() => fetchingStatus === false ? <Login appErr={err} errHandle={handleError} fetchStatus={setfetchingStatus} loginUser={loginUser} getUser={getUser} user={user} /> : <LoadingPage />}/>
+                <Route path="/login" component={() => fetchingStatus === false ? <Login appErr={err} errHandle={handleError} fetchStatus={setfetchingStatus} loginUser={loginUser} user={user} /> : <LoadingPage />}/>
                 <PrivateRoute path="/profile" component={() => <UserProfile user={user.data} updateUser={updateUser} errs={user.error} />}/>
                 <PrivateRoute path="/addplant" component={() => <AddPlant addPlant={addPlant} />} exact />
                 <PrivateRoute path="/home" component={() => <Home plants={plants.data} />}/>

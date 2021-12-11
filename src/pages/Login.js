@@ -58,22 +58,7 @@ const Login = props => {
   const handleSubmit = (event) => {
       event.preventDefault();
       props.fetchStatus(true);
-      props.loginUser(form, props.fetchStatus, push);
-      // axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/login', form)
-      // .then(res => {
-      //   setTimeout(() => {
-      //     props.fetchStatus(false);
-      //     localStorage.setItem('token', res.data.token);
-      //     localStorage.setItem('userName', `${form.username}`);
-      //     localStorage.setItem('uid', `${res.data.user_id}`);
-      //     push('/');
-      //     window.location.reload()
-      //   },1550);
-      // })
-      // .catch(err => {
-      //   props.fetchStatus(false);
-      //   props.errHandle(err.response.data);
-      // })      
+      props.loginUser(form, props.fetchStatus, push);   
     };
     
   return (
