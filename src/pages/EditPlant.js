@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { axiosWithAuth } from '../utilities/axiosCalls';
 import { useHistory, useParams } from 'react-router-dom';
 import { EditContainer, FormSection, Input, Heading} from '../styles/StyledComponents';
 
 const EditPlant = (props) => {
     const { push } = useHistory();
     const { id: idParams } = useParams();
-    const { plants, deletePlant } = props;
+    const { plants, deletePlant, updatePlant } = props;
     const uid = localStorage.getItem('uid');
     const [edit, setEdit] = useState(idParams ? plants.filter(plant => plant.plant_id === Number(idParams)) : [...plants]);
 
@@ -28,18 +27,11 @@ const EditPlant = (props) => {
 
     const handleSave = (event) => {
         event.preventDefault();
-        const id = edit.map( item => item.plant_id);
-        id.forEach((id, i) => {
-            axiosWithAuth()
-            .put(`/user/${uid}/plants/${id}`, edit[i])
-            .then(res => {
-                push("/home");
-                window.location.reload();
-            })
-            .catch(err => console.log(err))
+        const plantID = edit.map( item => item.plant_id);
+        plantID.forEach((id, i) => {
+            updatePlant(uid, id, edit[i])
         })
-
-        console.log("saved", edit)
+        push("/home");
     }
 
     const handleDeletePlant = (event) => {
