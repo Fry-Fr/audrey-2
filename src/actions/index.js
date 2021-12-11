@@ -23,6 +23,22 @@ export const getPlants = (id)=> (dispatch)=>{
     })
 };
 
+export const addPlant = (id, plant) => (dispatch) => {
+    dispatch({type: GET_PLANTS})
+    axiosWithAuth()
+    .post(`/user/${id}/plants`, plant)
+    .then(res => {
+        dispatch({
+            type: GET_SUCCESS, payload: res.data.plants
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERROR, payload: JSON.stringify(err)
+        })
+    })
+};
+
 export const getUser = (id)=> (dispatch)=>{
     dispatch({type: GET_USER})
     axiosWithAuth()

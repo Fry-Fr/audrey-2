@@ -1,12 +1,4 @@
-// Authenticated user can Create, Update and Delete a plant object. At a minimum, each plant must have the following properties:
-// id: Integer
-// nickname: String
-// species : String
-// h2o_frequency: Type determined by implementation
-// image: (optional)
-
 import React, { useState, useEffect } from 'react';
-import { axiosWithAuth } from '../utilities/axiosCalls';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import styled from 'styled-components';
@@ -19,7 +11,6 @@ import {
 import addPlantSchema from '../validation/addPlantSchema';
 
 const initialPlantValues = {
-    // id: '',
     nickname: '',
     species: '',
     h2o_frequency: '',
@@ -47,20 +38,14 @@ const FormSection = styled.div`
   box-shadow:0 1rem 1rem grey;
 `;
 
-// const ErrorDiv = styled.div`
-//     color: red;
-// `;
-
-
-// pull in errors or create them here
-export default function UserProfile() {
+export default function UserProfile(props) {
+    const { addPlant } = props;
     const [addPlantFormValues, setaddPlantFormValues] = useState(initialPlantValues);
     const [disabled, setDisabled] = useState(true)
     const [formErrors, setFormErrors] = useState(initialFormErrors) // object
 
     const { push } = useHistory();
 
-    // onchange -- set values
     const onChange = e => {
 
         let name = e.target.name;
@@ -84,25 +69,14 @@ export default function UserProfile() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        //*******//Needs to send information to database//********//
         const uid = localStorage.getItem('uid');
-        axiosWithAuth()
-        .post(`/user/${uid}/plants`, {
+        const body = {
             h20_frequency: addPlantFormValues.h2o_frequency,
             nickname: addPlantFormValues.nickname,
             species: addPlantFormValues.species,
-        })
-        .then(res => {
-            push("/home")
-            window.location.reload()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-        console.log(addPlantFormValues);
-
-        setaddPlantFormValues(initialPlantValues);
+        }
+        addPlant(uid, body);
+        push("/home");
     }
 
 
