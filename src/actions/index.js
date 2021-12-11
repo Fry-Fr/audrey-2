@@ -56,7 +56,9 @@ export const updatePlant = (uid, plant_id, changes) => (dispatch) => {
     axiosWithAuth()
     .put(`/user/${uid}/plants/${plant_id}`, changes)
     .then(res => {
-        dispatch(getPlants(uid))
+        dispatch({
+            type: GET_SUCCESS, payload: res.data.plants
+        })
     })
     .catch(err => {
         dispatch({
