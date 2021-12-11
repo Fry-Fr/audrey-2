@@ -1,5 +1,6 @@
 // list of plants
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PlantCard from "../components/PlantCard";
 import {Heading} from "../styles/StyledComponents";
@@ -21,12 +22,12 @@ const Card = styled.div`
 `;
 
 const Home = ({ plants }) => {
-console.log(plants.length)
+    const { push } = useHistory();
     return (
         <div>
             <Heading>My Plants</Heading>
             {plants.length === 0 ?
-                <Card>
+                <Card onClick={() => push("/addplant")}>
                     <h2>No plants added yet</h2>
                 </Card>
             :
