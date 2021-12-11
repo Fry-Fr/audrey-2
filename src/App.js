@@ -11,7 +11,7 @@ import UserProfile from "./pages/UserProfile"
 import PrivateRoute from "./components/PrivateRoute";
 import EditPlant from "./pages/EditPlant";
 import { connect } from 'react-redux';
-import { getPlants, getUser, updateUser, addPlant, deletePlant, updatePlant } from './actions';
+import { getPlants, getUser, updateUser, addPlant, deletePlant, updatePlant, loginUser } from './actions';
 import LoadingPage from "./pages/LoadingPage";
 
 const Content = styled.div`
@@ -22,7 +22,7 @@ const Content = styled.div`
 `;
 
 function App(props) {
-  const { plants, user, getPlants, getUser, updateUser, addPlant, deletePlant, updatePlant } = props;
+  const { plants, user, getPlants, getUser, updateUser, addPlant, deletePlant, updatePlant, loginUser } = props;
   const [fetchingStatus, setfetchingStatus] = useState(false)
   const [err, setErr] = useState('');
 
@@ -32,7 +32,7 @@ function App(props) {
       getUser(uid);
       getPlants(uid);
     }
-  },[getUser,getPlants]);
+  },[getUser,getPlants, loginUser]);
 
   const handleError = (x) => {
     setErr(x);
@@ -43,9 +43,9 @@ function App(props) {
         <div className="App">
             <Nav/>
             <Content>
-                <Route exact path="/" component={Welcome}/>
+                <Route exact path="/" component={() => <Welcome user={user.data} />}/>
                 <Route path="/signup" component={SignUp}/>
-                <Route path="/login" component={() => fetchingStatus === false ? <Login appErr={err} errHandle={handleError} fetchStatus={setfetchingStatus} /> : <LoadingPage />}/>
+                <Route path="/login" component={() => fetchingStatus === false ? <Login appErr={err} errHandle={handleError} fetchStatus={setfetchingStatus} loginUser={loginUser} getUser={getUser} user={user} /> : <LoadingPage />}/>
                 <PrivateRoute path="/profile" component={() => <UserProfile user={user.data} updateUser={updateUser} errs={user.error} />}/>
                 <PrivateRoute path="/addplant" component={() => <AddPlant addPlant={addPlant} />} exact />
                 <PrivateRoute path="/home" component={() => <Home plants={plants.data} />}/>
@@ -64,4 +64,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,{getPlants,getUser,updateUser,addPlant,deletePlant,updatePlant}) (App);
+export default connect(mapStateToProps,{getPlants,getUser,updateUser,addPlant,deletePlant,updatePlant,loginUser}) (App);

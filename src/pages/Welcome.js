@@ -11,9 +11,9 @@ const Image = styled.img`
   max-width: 90%;
 `;
 
-export default function Welcome() {
+export default function Welcome(props) {
   const token = localStorage.getItem('token');
-  const userName = localStorage.getItem('userName');
+  const userName = props.user.username || '';
 
   return (
     <WelcomeDiv>

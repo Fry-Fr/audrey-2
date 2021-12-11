@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import axios from 'axios';
 import * as yup from 'yup';
 import schema from '../validation/loginFormSchema';
 
@@ -17,6 +16,7 @@ const Login = props => {
   const [error, setError] = useState('');
   const [disabled, setDisabled] = useState(true);
 
+  props.errHandle(props.user.error)
   const { push } = useHistory();
 
   useEffect( () => {
@@ -58,27 +58,28 @@ const Login = props => {
   const handleSubmit = (event) => {
       event.preventDefault();
       props.fetchStatus(true);
-      axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/login', form)
-      .then(res => {
-        setTimeout(() => {
-          props.fetchStatus(false);
-          localStorage.setItem('token', res.data.token);
-          localStorage.setItem('userName', `${form.username}`);
-          localStorage.setItem('uid', `${res.data.user_id}`);
-          push('/');
-          window.location.reload()
-        },1750);
-      })
-      .catch(err => {
-        props.fetchStatus(false);
-        props.errHandle(err.response.data);
-      })      
+      props.loginUser(form, props.fetchStatus, push);
+      // axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/login', form)
+      // .then(res => {
+      //   setTimeout(() => {
+      //     props.fetchStatus(false);
+      //     localStorage.setItem('token', res.data.token);
+      //     localStorage.setItem('userName', `${form.username}`);
+      //     localStorage.setItem('uid', `${res.data.user_id}`);
+      //     push('/');
+      //     window.location.reload()
+      //   },1550);
+      // })
+      // .catch(err => {
+      //   props.fetchStatus(false);
+      //   props.errHandle(err.response.data);
+      // })      
     };
     
   return (
     <>
       <Heading>Login page</Heading>
-      {props.appErr.message ? <Error>{props.appErr.message}</Error> : null}
+      {props.appErr ? <Error>{props.appErr}</Error> : null}
       <FormDiv onSubmit={handleSubmit}>
           {error.username ? <Error>{error.username}</Error> : undefined}
         <Input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} />

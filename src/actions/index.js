@@ -1,4 +1,5 @@
 import { axiosWithAuth } from "../utilities/axiosCalls";
+import axios from "axios";
 
 export const GET_PLANTS = "GET_PLANTS";
 export const GET_USER = "GET_USER";
@@ -96,4 +97,25 @@ export const updateUser = (id, body) => (dispatch) => {
             type: GET_ERROR, payload: JSON.stringify(err.response.data.message)
         })
     })
+};
+
+export const loginUser = (formObj, fetchStatus, push) => (dispatch) => {
+    axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/login', formObj)
+      .then(res => {
+        setTimeout(() => {
+          fetchStatus(false);
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('uid', `${res.data.user_id}`);
+          dispatch(getUser(res.data.user_id));
+          dispatch(getPlants(res.data.user_id));
+          dispatch({type:GET_ERROR, payload: ''});
+          push("/");
+        },1550);
+      })
+      .catch(err => {
+        fetchStatus(false);
+        dispatch({
+            type: GET_ERROR, payload: JSON.stringify(err.response.data.message)
+        })
+      })      
 };
