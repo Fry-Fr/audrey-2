@@ -39,6 +39,19 @@ export const addPlant = (id, plant) => (dispatch) => {
     })
 };
 
+export const deletePlant = (uid, plant_id) => (dispatch) => {
+    axiosWithAuth()
+        .delete(`/user/${uid}/plants/${plant_id}`)
+        .then(res => {
+            dispatch(getPlants(uid))
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERROR, payload: JSON.stringify(err)
+            })
+        })
+};
+
 export const getUser = (id)=> (dispatch)=>{
     dispatch({type: GET_USER})
     axiosWithAuth()

@@ -6,7 +6,7 @@ import { EditContainer, FormSection, Input, Heading} from '../styles/StyledCompo
 const EditPlant = (props) => {
     const { push } = useHistory();
     const { id: idParams } = useParams();
-    const { plants } = props;
+    const { plants, deletePlant } = props;
     const uid = localStorage.getItem('uid');
     const [edit, setEdit] = useState(idParams ? plants.filter(plant => plant.plant_id === Number(idParams)) : [...plants]);
 
@@ -45,15 +45,9 @@ const EditPlant = (props) => {
     const handleDeletePlant = (event) => {
         event.preventDefault();
         const uid = localStorage.getItem('uid');
-        axiosWithAuth()
-        .delete(`/user/${uid}/plants/${idParams}`)
-        .then(res => {
-            push("/home");
-            window.location.reload();
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        deletePlant(uid, idParams);
+        push("/home");
+        
     }
 
     return (

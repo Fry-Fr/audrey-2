@@ -11,7 +11,7 @@ import UserProfile from "./pages/UserProfile"
 import PrivateRoute from "./components/PrivateRoute";
 import EditPlant from "./pages/EditPlant";
 import { connect } from 'react-redux';
-import { getPlants, getUser, updateUser, addPlant } from './actions';
+import { getPlants, getUser, updateUser, addPlant, deletePlant } from './actions';
 import LoadingPage from "./pages/LoadingPage";
 
 const Content = styled.div`
@@ -22,7 +22,7 @@ const Content = styled.div`
 `;
 
 function App(props) {
-  const { plants, user, getPlants, getUser, updateUser, addPlant } = props;
+  const { plants, user, getPlants, getUser, updateUser, addPlant, deletePlant } = props;
   const [fetchingStatus, setfetchingStatus] = useState(false)
   const [err, setErr] = useState('');
 
@@ -50,7 +50,7 @@ function App(props) {
                 <PrivateRoute path="/addplant" component={() => <AddPlant addPlant={addPlant} />} exact />
                 <PrivateRoute path="/home" component={() => <Home plants={plants.data} />}/>
                 <PrivateRoute path="/plants" component={() => <EditPlant plants={plants.data} />} exact/>
-                <PrivateRoute path="/plants/:id" component={() => <EditPlant plants={plants.data} />} exact/>
+                <PrivateRoute path="/plants/:id" component={() => <EditPlant plants={plants.data} deletePlant={deletePlant} />} exact/>
 
             </Content>
         </div>
@@ -64,4 +64,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,{getPlants,getUser,updateUser,addPlant}) (App);
+export default connect(mapStateToProps,{getPlants,getUser,updateUser,addPlant,deletePlant}) (App);
