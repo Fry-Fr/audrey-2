@@ -3,7 +3,7 @@ import axios from 'axios';
 export const axiosWithAuth = () => {
     const token = localStorage.getItem('token');
     return axios.create({
-        baseURL:'https://ptpt-watermyplants-5.herokuapp.com/',
+        baseURL:`${process.env.REACT_APP_API_URL}`,
         headers: {
             Authorization: token
         }

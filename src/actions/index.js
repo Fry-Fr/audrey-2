@@ -100,7 +100,7 @@ export const updateUser = (id, body) => (dispatch) => {
 };
 
 export const loginUser = (formObj, fetchStatus, push) => (dispatch) => {
-    axios.post('https://ptpt-watermyplants-5.herokuapp.com/auth/login', formObj)
+    axios.post(`${process.env.REACT_APP_API_URL}auth/login`, formObj)
       .then(res => {
         setTimeout(() => {
           fetchStatus(false);
